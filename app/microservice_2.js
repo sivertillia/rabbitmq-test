@@ -26,7 +26,7 @@ amqp.connect('amqp://localhost', function (error0, connection) {
     console.log(' [*] Waiting for messages in %s. To exit press CTRL+C', queue)
     channel.consume(queue, (msg) => {
       const obj = JSON.parse(msg.content)
-      console.log(' [x] Received %s: %s', obj.id, queue)
+      console.log(' [x] Received %s: %s', msg.content, queue)
     }, {
       noAck: true,
     })

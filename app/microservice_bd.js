@@ -23,12 +23,36 @@ amqp.connect('amqp://localhost', function (error0, connection) {
       durable: true,
     })
 
+    //TODO create global channel
+
     console.log(' [*] Waiting for messages in %s. To exit press CTRL+C', queue)
     channel.consume(queue, (msg) => {
       const obj = JSON.parse(msg.content)
       console.log(' [x] Received %s', obj.text)
       if (logger(obj.type)) {
         sendMQ(connection, obj)
+      }
+    }, {
+      noAck: true,
+    })
+  })
+  connection.createChannel(function (error2, channel) {
+    if (error2) {
+      throw error2
+    }
+    let queue = 'database'
+
+
+    channel.assertQueue(queue, {
+      durable: true,
+    })
+
+    console.log(' [*] Waiting for messages in %s. To exit press CTRL+C', queue)
+    channel.consume(queue, (msg) => {
+      const obj = JSON.parse(msg.content)
+      console.log(' [x] Received %s', obj.text)
+      if (logger(obj.type)) {
+        sendMQ(channel, obj)
       }
     }, {
       noAck: true,
