@@ -4,12 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "start": "node index.js"
-},
+    "start": "node index.js",
+    "ms_1": "babel-node strategy_0/microservice_1/index.js",
+    "ms_2": "babel-node strategy_0/microservice_2/index.js",
+    "ms_3": "babel-node strategy_0/microservice_3/index.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "amqplib": "^0.8.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.15.8",
+    "@babel/node": "^7.15.8",
+    "@babel/preset-env": "^7.15.8"
   }
 }
